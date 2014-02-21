@@ -73,7 +73,7 @@ For example, if I want two navbar items, one for navigating to home and one to a
 	
 This would produce the following navbar: 
 
-![Alt text](images/example_navbar.png)
+![Alt text](https://github.com/mbogochow/simple-site-framework/raw/master/images/example_navbar.png)
 
 An example for the sidebar would be similar as they share the same fields.
 

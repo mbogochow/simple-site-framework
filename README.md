@@ -73,7 +73,8 @@ For example, if I want two navbar items, one for navigating to home and one to a
 	
 This would produce the following navbar: 
 
-![Alt text](https://github.com/mbogochow/simple-site-framework/raw/master/images/example_navbar.png)
+![Alt text](https://github.com/mbogochow/simple-site-framework/blob/master/images/example_navbar.PNG?raw=true)
+
 
 An example for the sidebar would be similar as they share the same fields.
 
@@ -135,7 +136,8 @@ This could be loaded into the framework with the following `bootstrap-components
 
 Which would produce the following page:
 
-![Alt text](images/example_page.png)
+![Alt text](https://github.com/mbogochow/simple-site-framework/blob/master/images/example_page.PNG?raw=true)
+
 
 Future Features
 --------------------------------------

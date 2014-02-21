@@ -1,0 +1,8 @@
+<!-- Sidebar -->
+<div class="col-sm-3 col-md-2 sidebar">
+  <ul class="nav nav-sidebar">
+    {{#each sidebar}}
+      <li {{{this.active}}}><a href="{{this.target}}">{{this.name}}</a></li>
+    {{/each}}
+  </ul>
+</div><!--/span-->

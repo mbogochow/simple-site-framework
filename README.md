@@ -21,7 +21,7 @@ In order to be able to operate offline:
 
 
 Data Storage
---------------------------------------
+==============================
 
 Data is stored in files in the data directory.  Page information is stored in a JSON file named `bootstrap-components.json` with the format:
 
@@ -75,11 +75,52 @@ This would produce the following navbar:
 
 ![Alt text](https://github.com/mbogochow/simple-site-framework/blob/master/images/example_navbar.PNG?raw=true)
 
-
 An example for the sidebar would be similar as they share the same fields.
 
-Page Creation
+Additional Data Files
 --------------------------------------
+Additional data files can be loaded to be used by a page using the `data-files` array of a nav or sidebar object.  Any number of files can be added to this array.  The `data-files` array contains objects of the following form:
+
+	"data-files": [
+		{"name": "", "filename": "", "filetype": ""}
+	]
+
+The fields of the object have the following meaning:
+
+- `name`: An identifier for data.  This will be the name assigned to the data for page creation.
+- `filename`: The name of the file to load.
+- `filetype`: The type of the file.  If this field is not given, then it will attempt to figure out the file type from the file extension of file given in `filename`.  Currently, only supports XML files.
+
+For XML files, the system uses xml2js to create a JS object from the xml file, so at page creation, this `data-files` array:
+
+	"data-files": [
+		{"name": "my_data", "filename": "my_data.xml", "filetype": "xml"}
+	]
+
+with this content of `my_data.xml`:
+
+	<examples>
+		<example>
+			<name>My Example</name>
+			<description>This an example xml file</description>
+		</example>
+	</examples>
+
+would produce the following JS object for page creation: 
+
+	my_data: {
+		examples: {
+			example: {
+				name: "My Example",
+				description: "This is an example xml file"
+			}
+		}
+	}
+
+The `my_data` object would be a field in `req.context` so that it can be used for Handlebars.js templates.
+
+Page Creation
+======================================
 
 The navbar and sidebar will automatically be loaded in correctly for you for each of your pages leaving you to be able to define content of the main section of the page.  You have full power to use any HTML, JS, jQuery, etc. here including using Bootstrap and Handlebars.js features.
 
@@ -143,6 +184,6 @@ Future Features
 --------------------------------------
 The following are on the TODO list:
 
-1. Implement more data storage for user pages.  This will likely be XML support as well as addition JSON files support.
-2. POSTs 
-3. Add more bootstrap themes.
+1. POSTs 
+2. Support for having different sidebar links for each navbar item.
+2. Add more bootstrap themes.

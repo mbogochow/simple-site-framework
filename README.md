@@ -4,13 +4,13 @@ Simple Site Framework
 Description
 --------------------------------------
 
-This is a simple framework for throwing data into connected dynamic web pages without needing to touch any of the server code or style layout.  It uses Twitter Bootstrap 3.1.1 using a fluid layout for styling the pages.  Also includes jQuery and some custom scripts.  It is designed to be able to be used offline by default.
+This is a simple framework for throwing data into connected dynamic web pages without needing to touch any of the server code or style layout.  It uses [Twitter Bootstrap 3.1.1](http://getbootstrap.com) using a fluid layout for styling the pages.  Also includes [jQuery](http://jquery.com) and some custom scripts.  It is designed to be able to be used offline by default.
 
-The framework uses Handlebars.js for templating and heavily utilizes partials for simple and uncluttered page creation while keeping the same bootstrap theme for each page and leaving navigation between pages intact.
+The framework uses [Handlebars.js](http://handlebarsjs.com) for templating and heavily utilizes partials for simple and uncluttered page creation while keeping the same bootstrap theme for each page and leaving navigation between pages intact.
 
 Installation
 --------------------------------------
-It can be run as is after user content is added.  Bootstrap and jQuery are not provided and so it will attempt to pull these resources from the web if it cannot find them locally.  
+It can be run as is after user content is added.  Bootstrap and jQuery are not provided and so it will attempt to pull these resources from the web on page load if it cannot find them locally.  
 
 In order to be able to operate offline:
 
@@ -45,8 +45,6 @@ Data is stored in files in the data directory.  Page information is stored in a 
 	}
 
 Where `"brand"` is the text that appears in the far left of the navbar on each page.  Each entry in the `"nav"` object represents a button on the navbar and each entry in the `"sidebar"` object is a link on the sidebar.
-
-
 
 The following are brief descriptions of each field in the `"nav"` and `"sidebar"` objects:
 
@@ -91,7 +89,7 @@ The fields of the object have the following meaning:
 - `filename`: The name of the file to load.
 - `filetype`: The type of the file.  If this field is not given, then it will attempt to figure out the file type from the file extension of file given in `filename`.  Currently, only supports XML files.
 
-For XML files, the system uses xml2js to create a JS object from the xml file, so at page creation, this `data-files` array:
+For XML files, the system uses [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js) to create a JS object from the xml file, so at page creation, this `data-files` array:
 
 	"data-files": [
 		{"name": "my_data", "filename": "my_data.xml", "filetype": "xml"}

@@ -13,8 +13,6 @@ var express     = require('express')
 
 var app = express();
 
-var components_file = "data/bootstrap-components.json";
-
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.use(express.favicon());
@@ -39,32 +37,33 @@ var sendPage = function(file, req, res) {
   }
 }
 
-var localJquery = fs.existsSync('public/javascripts/jquery.min.js');
-var localBootstrap = fs.existsSync('public/bootstrap');
+function getData() {
+  var components_file = "data/bootstrap-components.json";
+  return JSON.parse(fs.readFileSync(components_file, 'utf8'));
+}
+
+function getLink(data, key) {
+  if (data.nav[key]) return data.nav[key];
+  else if (data.sidebar[key]) return data.sidebar[key];
+  else return null;
+}
+
 function getContext(name) {
-  var components = fs.readFileSync(components_file, 'utf8');
-  var context = JSON.parse(components);
+  var context = getData();
+  var page = getLink(context, name);
   
-  if (context.sidebar[name])
-  {
-    context.page_header = context.sidebar[name].title;
-    context.sidebar[name].active = partials.active;
-  } else if (context.nav[name]) {
-    context.page_header = context.nav[name].title;
-    context.nav[name].active = partials.active;
-  }
+  if (page != null)
+    page.active = partials.active;
   
-  if (!localJquery)
-    context.jquery = true;
-    
-  if (!localBootstrap)
-    context.bootstrap = true;
+  context.page = page;
+  context.jquery = fs.existsSync('public/javascripts/jquery.min.js');  
+  context.bootstrap = fs.existsSync('public/bootstrap');
   
   return context;
 }
 
 http.createServer(app).listen(app.get('port'), function() {
-  var components = JSON.parse(fs.readFileSync(components_file, 'utf8'));
+  var components = getData();
 
   var callback = function(key, file) {
     return function(req, res) {

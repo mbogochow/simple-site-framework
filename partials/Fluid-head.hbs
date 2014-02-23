@@ -1,14 +1,21 @@
 <head>
   <title>{{page.title}}</title>
   
-  
-  <link href=
-  {{#if bootstrap}}
-    http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href=
+  {{#unless bootstrap}}
+    "http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
   {{else}}
-    "bootstrap/css/bootstrap.min.css" 
-  {{/if}}
-   rel="stylesheet">
+    "bootstrap/css/bootstrap.min.css">
+  {{/unless}}
   
+  <!-- Google Code Prettify -->
+  <link rel="stylesheet" href=
+  {{#unless prettify}}
+    "http://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.css">
+  {{else}}
+    "google-code-prettify/prettify.css">
+  {{/unless}}
+     
   <link href="stylesheets/fluid_layout.css" rel="stylesheet">
 </head>

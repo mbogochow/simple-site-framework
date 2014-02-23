@@ -1,18 +1,34 @@
 
+<!-- jQuery -->
 <script type="text/javascript" src=
-{{#if jquery}}
-  "http://code.jquery.com/jquery-1.10.2.min.js"
+{{#unless jquery}}
+  "http://code.jquery.com/jquery-1.10.2.min.js"></script>
 {{else}}
-  "javascripts/jquery.min.js"
-{{/if}}
-></script>
+  "javascripts/jquery.min.js"></script>
+{{/unless}}
 
+<!-- Bootstrap -->
 <script type="text/javascript" src=
-{{#if bootstrap}}
-  http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js
+{{#unless bootstrap}}
+  "http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 {{else}}
-  "bootstrap/js/bootstrap.min.js"
-{{/if}}
-></script>
+  "bootstrap/js/bootstrap.min.js"></script>
+{{/unless}}
+
+<!-- Google Code Prettify -->
+<script type="text/javascript" src=
+{{#unless prettify}}
+  "http://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.js"></script>
+{{else}}
+  "google-code-prettify/prettify.js"></script>
+{{/unless}}
 
 <script type="text/javascript" src="javascripts/anchor_scroll.js"></script>
+<script>
+  //http://mayurrokade.com/blog/syntax-highlighting-twitter-bootstrap/
+  !function ($) {
+    $(function(){
+      window.prettyPrint && prettyPrint()
+    })
+  }(window.jQuery)
+</script>

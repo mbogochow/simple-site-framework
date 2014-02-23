@@ -18,7 +18,9 @@ In order to be able to operate offline:
 2. Unzip the package and rename the folder to `bootstrap`.  Place this folder in the `public` directory.
 3. Download jQuery from [here](//code.jquery.com/jquery-1.10.2.min.js) or go to [http://code.jquery.com/jquery-1.10.2.min.js](http://code.jquery.com/jquery-1.10.2.min.js).
 4. Rename this file to `jquery.min.js` and placed it in the `public/javascripts` directory.
-5. Optional: The system supports [Google Code Prettify](https://code.google.com/p/google-code-prettify/).  The effects of Prettify are only seen if you have a `<pre>` tag with `class="prettyprint"`.  If you would like to use this feature offline, download the small package from [here](https://code.google.com/p/google-code-prettify/downloads/detail?name=prettify-small-4-Mar-2013.tar.bz2&can=2&q=) or go to [https://code.google.com/p/google-code-prettify/downloads/list](https://code.google.com/p/google-code-prettify/downloads/list).  Extract and move the `google-code-prettify` folder to the public folder.
+5. Optional: The system supports [Google Code Prettify](https://code.google.com/p/google-code-prettify/).  The effects of Prettify are only seen if you have a `<pre>` tag with `class="prettyprint"`.
+	- If you would like to use this feature offline, download the small package from [here](https://code.google.com/p/google-code-prettify/downloads/detail?name=prettify-small-4-Mar-2013.tar.bz2&can=2&q=) or go to [https://code.google.com/p/google-code-prettify/downloads/list](https://code.google.com/p/google-code-prettify/downloads/list).
+	- Extract and move the `google-code-prettify` folder to the `public` directory.
 
 
 Data Storage
@@ -180,7 +182,7 @@ Which would produce the following page:
 
 
 Future Features
---------------------------------------
+=======================================
 The following are on the TODO list:
 
 1. POSTs 

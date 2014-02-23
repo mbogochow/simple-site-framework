@@ -1,7 +1,7 @@
 {
-  "name": "application-name",
-  "version": "0.0.1",
-  "private": true,
+  "name": "simple-site-framework",
+  "version": "1.0.1",
+  "private": false,
   "scripts": {
     "start": "node app.js"
   },

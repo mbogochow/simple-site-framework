@@ -1,20 +1,2 @@
+// Add custom CSS here
 
-
-ol.reference {
-  list-style-type: none;
-  margin-left: 0;
-}
-
-ol.reference > li {
-  counter-increment: referencelistcounter;
-}
-
-ol.reference > li:before {
-  content: "[" counter(referencelistcounter) "]";
-  float: left;
-  width: 2em;
-}
-
-ol.reference:first-child {
-  counter-reset: referencelistcounter;
-}

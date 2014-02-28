@@ -16,7 +16,24 @@
   {{else}}
     "google-code-prettify/prettify.css">
   {{/unless}}
+  
+  <!-- Highlight.js -->
+  <link rel="stylesheet" href=
+  {{#unless hljs}}
+    "http://yandex.st/highlightjs/8.0/styles/default.min.css">
+  {{else}}
+    "stylesheets/default.min.css">
+  {{/unless}}
+  
      
   <link href="stylesheets/fluid_layout.css" rel="stylesheet">
   <link href="stylesheets/custom.css" rel="stylesheet">
+
+  <!-- https://github.com/isagalaev/highlight.js/issues/304 -->
+  <style>
+    pre, pre code, .hljs {
+      background: #f5f5f5;
+      font-family: monospace;
+    }
+  </style>
 </head>

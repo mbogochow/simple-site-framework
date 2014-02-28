@@ -15,12 +15,15 @@ It can be run as is after user content is added.  Bootstrap and jQuery are not p
 In order to be able to operate offline:
 
 1. Download the Twitter Bootstrap distribution package from [here](https://github.com/twbs/bootstrap/releases/download/v3.1.1/bootstrap-3.1.1-dist.zip) or go to [http://getbootstrap.com/](http://getbootstrap.com/).
-2. Unzip the package and rename the folder to `bootstrap`.  Place this folder in the `public` directory.
-3. Download jQuery from [here](//code.jquery.com/jquery-1.10.2.min.js) or go to [http://code.jquery.com/jquery-1.10.2.min.js](http://code.jquery.com/jquery-1.10.2.min.js).
-4. Rename this file to `jquery.min.js` and placed it in the `public/javascripts` directory.
-5. Optional: The system supports [Google Code Prettify](https://code.google.com/p/google-code-prettify/).  The effects of Prettify are only seen if you have a `<pre>` tag with `class="prettyprint"`.
+	- Unzip the package and rename the folder to `bootstrap`.  Place this folder in the `public` directory.
+2. Download jQuery from [here](//code.jquery.com/jquery-1.10.2.min.js) or go to [http://code.jquery.com/](http://code.jquery.com/).
+	- Rename this file to `jquery.min.js` and placed it in the `public/javascripts` directory.
+3. Optional: The system supports [Google Code Prettify](https://code.google.com/p/google-code-prettify/).  The effects of Prettify are only seen if you have a `<pre>` tag with `class="prettyprint"`.
 	- If you would like to use this feature offline, download the small package from [here](https://code.google.com/p/google-code-prettify/downloads/detail?name=prettify-small-4-Mar-2013.tar.bz2&can=2&q=) or go to [https://code.google.com/p/google-code-prettify/downloads/list](https://code.google.com/p/google-code-prettify/downloads/list).
 	- Extract and move the `google-code-prettify` folder to the `public` directory.
+4. Optional: The system also supports [Highlight.js](http://highlightjs.org/).  Highlight.js' syntax highlighting will be active within any `pre > code` tags where the `pre`'s class is not `prettyprint`.
+	- If you would like to use Highlight.js offline, download the javascript file from [here](http://yandex.st/highlightjs/8.0/highlight.min.js) and the CSS file from [here](http://yandex.st/highlightjs/8.0/styles/default.min.css).
+	- Move the javascript file to the `public/javascripts` directory and the CSS file to the `public/stylesheets` directory.
 
 
 Data Storage

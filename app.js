@@ -91,6 +91,7 @@ function getContext(name) {
   context.jquery = fs.existsSync('public/javascripts/jquery.min.js');
   context.bootstrap = fs.existsSync('public/bootstrap');
   context.prettify = fs.existsSync('public/google-code-prettify');
+  context.hljs = fs.existsSync('public/javascripts/highlight.min.js');
   
   var data_files = page['data-files'];
   for (var fkey in data_files) {

@@ -23,12 +23,26 @@
   "google-code-prettify/prettify.js"></script>
 {{/unless}}
 
+<!-- Highlight.js -->
+<script type="text/javascript" src=
+{{#unless prettify}}
+  "http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+{{else}}
+  "javascripts/highlight.min.js"></script>
+{{/unless}}
+
 <script type="text/javascript" src="javascripts/anchor_scroll.js"></script>
-<script>
-  //http://mayurrokade.com/blog/syntax-highlighting-twitter-bootstrap/
-  !function ($) {
-    $(function(){
-      window.prettyPrint && prettyPrint()
-    })
-  }(window.jQuery)
+
+
+<script type="text/javascript">
+  prettyPrint && prettyPrint();
+  
+  hljs && $('pre').each(function(index, el) {
+    if ($(el).hasClass('prettyprint')) return;
+    
+    $(el).children('code').each(function(i, e) {
+      hljs.highlightBlock(e)
+    });
+  });
 </script>
+

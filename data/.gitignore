@@ -1,3 +1,5 @@
+*.html
+*.md
 *.xml
 *.json
 *.cvs

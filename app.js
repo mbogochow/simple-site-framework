@@ -1,3 +1,8 @@
+/**
+ * Mike Bogochow
+ * simple-site-framework
+ * app.js
+ */
 
 /**
  * Module dependencies.
@@ -10,10 +15,12 @@ var express     = require('express')
   , fs          = require('fs')
   , fileSend    = require('./lib/fileSend.js')
   , xml2js      = require('xml2js')
+  , markdown 	= require('markdown')
 ;
 
 var app = express();
 var xmlParser = xml2js.parseString;
+var mdParser = markdown.markdown;
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -93,16 +100,21 @@ function getContext(name) {
   context.prettify = fs.existsSync('public/google-code-prettify');
   context.hljs = fs.existsSync('public/javascripts/highlight.min.js');
   
+  // Parse through the data files
   var data_files = page['data-files'];
   for (var fkey in data_files) {
     var data_file = data_files[fkey];
     if (!data_file.filetype) 
       data_file.filetype = getFileType(data_file.filename);
     if (equalsIgnoreCase(data_file.filetype, "xml")) {
-      var xml = fs.readFileSync("data/" + data_file.filename, 'utf8');
+      var xml = fs.readFileSync('data/' + data_file.filename, 'utf8');
       xmlParser(xml, function (err, result) {
         context[data_file.name] = result;
       });
+    }
+    else if (equalsIgnoreCase(data_file.filetype, 'md')) {
+    	var md = fs.readFileSync('data/' + data_file.filename, 'utf8');
+    	context[data_file.name] = mdParser.toHTML(md);
     }
   }
   return context;

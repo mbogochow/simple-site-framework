@@ -1,15 +1,13 @@
-Simple Site Framework
-==================================================
+# Simple Site Framework
 
-Description
---------------------------------------
+## Description
 
 This is a simple framework for throwing data into connected dynamic web pages without needing to touch any of the server code or style layout.  It uses [Twitter Bootstrap 3.1.1](http://getbootstrap.com) using a fluid layout for styling the pages.  Also includes [jQuery](http://jquery.com) and some custom scripts.  It is designed to be able to be used offline by default.
 
 The framework uses [Handlebars.js](http://handlebarsjs.com) for templating and heavily utilizes partials for simple and uncluttered page creation while keeping the same bootstrap theme for each page and leaving navigation between pages intact.
 
-Installation
---------------------------------------
+## Installation
+
 It can be run as is after user content is added.  Bootstrap and jQuery are not provided and so it will attempt to pull these resources from the web on page load if it cannot find them locally.  
 
 In order to be able to operate offline:
@@ -25,9 +23,7 @@ In order to be able to operate offline:
 	- If you would like to use Highlight.js offline, download the javascript file from [here](http://yandex.st/highlightjs/8.0/highlight.min.js) and the CSS file from [here](http://yandex.st/highlightjs/8.0/styles/default.min.css).
 	- Move the javascript file to the `public/javascripts` directory and the CSS file to the `public/stylesheets` directory.
 
-
-Data Storage
-==============================
+## Data Storage
 
 Data is stored in files in the data directory.  Page information is stored in a JSON file named `bootstrap-components.json` with the format:
 
@@ -93,7 +89,7 @@ The fields of the object have the following meaning:
 
 - `name`: An identifier for data.  This will be the name assigned to the data for page creation.
 - `filename`: The name of the file to load.
-- `filetype`: The type of the file.  If this field is not given, then it will attempt to figure out the file type from the file extension of file given in `filename`.  Currently, only supports XML files.
+- `filetype`: The type of the file.  If this field is not given, then it will attempt to figure out the file type from the file extension of file given in `filename`.  Currently, supports XML and Markdown.
 
 For XML files, the system uses [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js) to create a JS object from the xml file, so at page creation, this `data-files` array:
 
@@ -122,6 +118,8 @@ would produce the following JS object for page creation:
 	}
 
 The `my_data` object would be a field in `req.context` so that it can be used for Handlebars.js templates.
+
+For Markdown files, the system uses [markdown-js](https://github.com/evilstreak/markdown-js) to create an HTML document from the Markdown document.  This document is placed into the `name` field of `req.context` and so it can be accessed through Handlebars with `{{{this.name}}}`.
 
 Page Creation
 ======================================
@@ -158,26 +156,26 @@ An full example of a page would be:
 
 This could be loaded into the framework with the following `bootstrap-components.json`: 
 
-	{
-	  "brand": "Brand",
-	  "nav": {
-	    "index": {
-	      "name": "Home", 
-	      "target": "/",
-	      "title": "This is my example <small>html tags here</small>",
-	      "filename": "index.html"
-	    }
-	  },
-	  "sidebar": {
-	    "example_content": {
-	      "name": "Example Content", 
-	      "target": "/content",
-	      "title": "Example Content Page",
-	      "description": "This is a non-existant page created for an example.",
-	      "filename": "noex.html"
-	    }
-	  }
-	}
+  {
+    "brand": "Brand",
+    "nav": {
+      "index": {
+        "name": "Home", 
+        "target": "/",
+        "title": "This is my example <small>html tags here</small>",
+        "filename": "index.html"
+      }
+    },
+    "sidebar": {
+      "example_content": {
+        "name": "Example Content", 
+        "target": "/content",
+        "title": "Example Content Page",
+        "description": "This is a non-existant page created for an example.",
+        "filename": "noex.html"
+      }
+    }
+  }
 
 Which would produce the following page:
 

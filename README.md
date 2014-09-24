@@ -77,8 +77,8 @@ This would produce the following navbar:
 
 An example for the sidebar would be similar as they share the same fields.
 
-Additional Data Files
---------------------------------------
+## Additional Data Files
+
 Additional data files can be loaded to be used by a page using the `data-files` array of a nav or sidebar object.  Any number of files can be added to this array.  The `data-files` array contains objects of the following form:
 
 	"data-files": [
@@ -121,8 +121,7 @@ The `my_data` object would be a field in `req.context` so that it can be used fo
 
 For Markdown files, the system uses [markdown-js](https://github.com/evilstreak/markdown-js) to create an HTML document from the Markdown document.  This document is placed into the `name` field of `req.context` and so it can be accessed through Handlebars with `{{{this.name}}}`.
 
-Page Creation
-======================================
+# Page Creation
 
 The navbar and sidebar will automatically be loaded in correctly for you for each of your pages leaving you to be able to define content of the main section of the page.  You have full power to use any HTML, JS, jQuery, etc. here including using Bootstrap and Handlebars.js features.
 
@@ -181,9 +180,23 @@ Which would produce the following page:
 
 ![Alt text](https://github.com/mbogochow/simple-site-framework/blob/master/images/example_page.PNG?raw=true)
 
+# Customization
 
-Future Features
-=======================================
+The following files are automatically loaded into each page in the fluid layout:
+
+* /public/stylesheets/custom.css
+* /public/javascripts/custom.js
+
+Therefore, anything added to these files will affect each page on the site.
+
+Alternatively, in place of the `bootstrap-fluid-top` partial you can use the `bootstrap-fluid-top-open` and `bootstrap-fluid-top-close` partials.  Any styles, stylsheets or scripts that you load in between these partials will be loaded into the page.
+
+In addition, in place of the `bootstrap-fluid-bottom` partial, you can use the `boostrap-fluid-bottom-open` and `boostrap-fluid-bottom-close` partials.  This will work the same as the top partial but for scripts which should be loaded at the bottom of the body.
+
+Using these alternate partials allows for customization on a page-by-page basis.
+
+# Future Features
+
 The following are on the TODO list:
 
 1. POSTs 

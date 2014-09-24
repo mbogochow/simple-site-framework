@@ -6,7 +6,7 @@
   {{#unless bootstrap}}
     "http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
   {{else}}
-    "bootstrap/css/bootstrap.min.css">
+    "/bootstrap/css/bootstrap.min.css">
   {{/unless}}
   
   <!-- Google Code Prettify -->
@@ -14,7 +14,7 @@
   {{#unless prettify}}
     "http://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.css">
   {{else}}
-    "google-code-prettify/prettify.css">
+    "/google-code-prettify/prettify.css">
   {{/unless}}
   
   <!-- Highlight.js -->
@@ -22,12 +22,12 @@
   {{#unless hljs}}
     "http://yandex.st/highlightjs/8.0/styles/default.min.css">
   {{else}}
-    "stylesheets/default.min.css">
+    "/stylesheets/default.min.css">
   {{/unless}}
   
      
-  <link href="stylesheets/fluid_layout.css" rel="stylesheet">
-  <link href="stylesheets/custom.css" rel="stylesheet">
+  <link href="/stylesheets/fluid_layout.css" rel="stylesheet">
+  <link href="/stylesheets/custom.css" rel="stylesheet">
 
   <!-- https://github.com/isagalaev/highlight.js/issues/304 -->
   <style>
@@ -36,4 +36,3 @@
       font-family: monospace;
     }
   </style>
-</head>

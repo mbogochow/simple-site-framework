@@ -33,7 +33,7 @@ Data is stored in files in the data directory.  Page information is stored in a 
     "nav": {
         "navItem1": {
             "name": "navItem1Name", 
-            "target": "/navItem1"
+            "target": "/navItem1",
             "title": "navItem1Title",
             "filename": "navItem1.html"
         }

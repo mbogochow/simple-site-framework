@@ -27,24 +27,26 @@ In order to be able to operate offline:
 
 Data is stored in files in the data directory.  Page information is stored in a JSON file named `bootstrap-components.json` with the format:
 
-	{
-		"brand": "brandName",  
-		"nav": {
-			"navItem1": {
-				"name": "navItem1Name", 
-				"target": "/navItem1"
-				"title": "navItem1Title",
-				"filename": "navItem1.html"
-			}
-		}, "sidebar": {
-			"sideItem1": {
-				"name": "sideItem1Name",
-				"target": "/sideItem1",
-				"title": "sideItem1Title",
-				"filename": "sideItem1.html"
-			}
-		}
-	}
+```json
+{
+    "brand": "brandName",  
+    "nav": {
+        "navItem1": {
+            "name": "navItem1Name", 
+            "target": "/navItem1"
+            "title": "navItem1Title",
+            "filename": "navItem1.html"
+        }
+    }, "sidebar": {
+        "sideItem1": {
+            "name": "sideItem1Name",
+            "target": "/sideItem1",
+            "title": "sideItem1Title",
+            "filename": "sideItem1.html"
+        }
+    }
+}
+```
 
 Where `"brand"` is the text that appears in the far left of the navbar on each page.  Each entry in the `"nav"` object represents a button on the navbar and each entry in the `"sidebar"` object is a link on the sidebar.
 
@@ -59,18 +61,20 @@ In addition, any other field names may be added anywhere in this file to be used
 
 For example, if I want two navbar items, one for navigating to home and one to an about page, I would have the following for my `"nav"` object:
 
-	//...,
-	"nav": {
-		"index": {
-			"name": "Home",
-			"target": "/"
-		},
-		"about": {
-			"name": "About",
-			"target": "/about"
-		}
-	}//,..
-	
+```json
+//...,
+"nav": {
+    "index": {
+        "name": "Home",
+        "target": "/"
+    },
+    "about": {
+        "name": "About",
+        "target": "/about"
+    }
+}//,..
+```
+
 This would produce the following navbar: 
 
 ![Alt text](https://github.com/mbogochow/simple-site-framework/blob/master/images/example_navbar.PNG?raw=true)
@@ -81,9 +85,11 @@ An example for the sidebar would be similar as they share the same fields.
 
 Additional data files can be loaded to be used by a page using the `data-files` array of a nav or sidebar object.  Any number of files can be added to this array.  The `data-files` array contains objects of the following form:
 
-	"data-files": [
-		{"name": "", "filename": "", "filetype": ""}
-	]
+```json
+"data-files": [
+    {"name": "", "filename": "", "filetype": ""}
+]
+```
 
 The fields of the object have the following meaning:
 
@@ -93,29 +99,35 @@ The fields of the object have the following meaning:
 
 For XML files, the system uses [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js) to create a JS object from the xml file, so at page creation, this `data-files` array:
 
-	"data-files": [
-		{"name": "my_data", "filename": "my_data.xml", "filetype": "xml"}
-	]
+```json
+"data-files": [
+    {"name": "my_data", "filename": "my_data.xml", "filetype": "xml"}
+]
+```
 
 with this content of `my_data.xml`:
 
-	<examples>
-		<example>
-			<name>My Example</name>
-			<description>This an example xml file</description>
-		</example>
-	</examples>
+```xml
+<examples>
+    <example>
+        <name>My Example</name>
+        <description>This an example xml file</description>
+    </example>
+</examples>
+```
 
 would produce the following JS object for page creation: 
 
-	my_data: {
-		examples: {
-			example: {
-				name: "My Example",
-				description: "This is an example xml file"
-			}
-		}
-	}
+```javascript
+my_data: {
+    examples: {
+        example: {
+            name: "My Example",
+            description: "This is an example xml file"
+        }
+    }
+}
+```
 
 The `my_data` object would be a field in `req.context` so that it can be used for Handlebars.js templates.
 
@@ -127,54 +139,60 @@ The navbar and sidebar will automatically be loaded in correctly for you for eac
 
 Each page should be an HTML document in the public directory with the format:
 
-	{{> bootstrap-fluid-top this}}
-	
-	// Your code
+```mustache
+{{> bootstrap-fluid-top this}}
 
-	{{> bootstrap-fluid-bottom this}}
+// Your code
+
+{{> bootstrap-fluid-bottom this}}
+```
 
 The two `{{> ... }}` sections are Handlebars.js partials that load in the rest of the page.
 
 An full example of a page would be:
 
-	{{> bootstrap-fluid-top this}}
-	
-	<div class="row">
-	  {{#each sidebar}}
-	    <div class="col-md-4">
-	      <h2>{{this.name}}</h2>
-	      <p>
-	        {{{this.description}}}
-	      </p>
-	      <p><a class="btn btn-default" href="{{this.target}}" role="button">View details ></a></p>
-	    </div>
-	  {{/each}}
-	</div><!--/row-->
+```html
+{{> bootstrap-fluid-top this}}
 
-	{{> bootstrap-fluid-bottom this}}
+<div class="row">
+  {{#each sidebar}}
+<div class="col-md-4">
+  <h2>{{this.name}}</h2>
+  <p>
+    {{{this.description}}}
+  </p>
+  <p><a class="btn btn-default" href="{{this.target}}" role="button">View details ></a></p>
+</div>
+  {{/each}}
+</div><!--/row-->
+
+{{> bootstrap-fluid-bottom this}}
+```
 
 This could be loaded into the framework with the following `bootstrap-components.json`: 
 
-  {
-    "brand": "Brand",
-    "nav": {
-      "index": {
-        "name": "Home", 
-        "target": "/",
-        "title": "This is my example <small>html tags here</small>",
-        "filename": "index.html"
-      }
-    },
-    "sidebar": {
-      "example_content": {
-        "name": "Example Content", 
-        "target": "/content",
-        "title": "Example Content Page",
-        "description": "This is a non-existant page created for an example.",
-        "filename": "noex.html"
+```json
+{
+  "brand": "Brand",
+  "nav": {
+    "index": {
+      "name": "Home", 
+      "target": "/",
+      "title": "This is my example <small>html tags here</small>",
+      "filename": "index.html",
+      "sidebar": {
+        "example_content": {
+          "name": "Example Content", 
+          "target": "/content",
+          "title": "Example Content Page",
+          "description": "This is a non-existant page created for an example.",
+          "filename": "noex.html"
+        }
       }
     }
   }
+}
+```
 
 Which would produce the following page:
 
@@ -189,7 +207,7 @@ The following files are automatically loaded into each page in the fluid layout:
 
 Therefore, anything added to these files will affect each page on the site.
 
-Alternatively, in place of the `bootstrap-fluid-top` partial you can use the `bootstrap-fluid-top-open` and `bootstrap-fluid-top-close` partials.  Any styles, stylsheets or scripts that you load in between these partials will be loaded into the page.
+Alternatively, in place of the `bootstrap-fluid-top` partial you can use the `bootstrap-fluid-top-open` and `bootstrap-fluid-top-close` partials.  Any styles, stylesheets or scripts that you load in between these partials will be loaded into the page.
 
 In addition, in place of the `bootstrap-fluid-bottom` partial, you can use the `boostrap-fluid-bottom-open` and `boostrap-fluid-bottom-close` partials.  This will work the same as the top partial but for scripts which should be loaded at the bottom of the body.
 
@@ -200,5 +218,4 @@ Using these alternate partials allows for customization on a page-by-page basis.
 The following are on the TODO list:
 
 1. POSTs 
-2. Support for having different sidebar links for each navbar item.
 2. Add more bootstrap themes.

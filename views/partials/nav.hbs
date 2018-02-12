@@ -1,0 +1,13 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="#">{{brand}}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#siteNavbar" aria-controls="siteNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="siteNavbar">
+        <ul class="navbar-nav mr-auto">
+            {{#each nav}}
+                <li class="nav-item {{{this.active}}}"><a class="nav-link" href="{{this.target}}">{{this.name}}</a></li>
+            {{/each}}
+        </ul>
+    </div>
+</nav>

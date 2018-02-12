@@ -1,0 +1,65 @@
+</main>
+<!--</div>&lt;!&ndash;/main&ndash;&gt;-->
+</div><!--/row-->
+</div><!--/container-->
+
+
+<!-- jQuery -->
+<script type="text/javascript" src=
+{{#unless jquery}}
+"http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
+{{else}}
+"/javascripts/jquery.min.js">
+{{/unless}}
+</script>
+
+<!-- Bootstrap -->
+<script type="text/javascript" src=
+{{#unless bootstrap}}
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+{{else}}
+"/bootstrap/js/bootstrap.min.js">
+{{/unless}}
+</script>
+
+<!-- Popper.js (for Bootstrap) -->
+<script type="text/javascript" src=
+{{#unless bootstrap}}
+"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+{{else}}
+"/bootstrap/js/popper.min.js">
+{{/unless}}
+</script>
+
+<!-- Google Code Prettify -->
+<script type="text/javascript" src=
+{{#unless prettify}}
+"https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js">
+{{else}}
+"/google-code-prettify/prettify.js">
+{{/unless}}
+</script>
+
+<!-- Highlight.js -->
+<script type="text/javascript" src=
+{{#unless prettify}}
+"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js">
+{{else}}
+"/javascripts/highlight.min.js">
+{{/unless}}
+</script>
+
+<script type="text/javascript" src="/javascripts/anchor_scroll.js"></script>
+<script type="text/javascript" src="/javascripts/custom.js"></script>
+
+<script type="text/javascript">
+    prettyPrint && prettyPrint();
+
+    hljs && $('pre').each(function(index, el) {
+        if ($(el).hasClass('prettyprint')) return;
+
+        $(el).children('code').each(function(i, e) {
+            hljs.highlightBlock(e)
+        });
+    });
+</script>

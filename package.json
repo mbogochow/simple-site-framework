@@ -1,19 +1,31 @@
 {
-  "name": "simple-site-framework",
-  "version": "1.1.0",
-  "private": false,
+  "name": "node-site-framework",
+  "version": "0.0.0",
+  "description": "Framework for building node.js-based sites",
+  "author": {
+    "name": "Mike Bogochow",
+    "email": "mbogochow at gmail dot com",
+    "url": "http://mbogo.me/"
+  },
+  "homepage": "http://mbogo.me/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mbogochow/node-site-framework"
+  },
+  "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node ./bin/www"
   },
   "dependencies": {
-    "express": "4.13.4",
-    "serve-favicon": "2.3.0",
-    "body-parser": "1.15.1",
-    "method-override": "2.3.6",
-    "morgan": "1.7.0",
-    "handlebars": "4.0.5",
-    "xml2js": "0.4.16",
-    "markdown": "0.5.0"
-  },
-  "main": "app.js"
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.15.5",
+    "hbs": "~4.0.1",
+    "markdown-it": "^8.4.0",
+    "morgan": "~1.9.0",
+    "node-sass-middleware": "0.9.8",
+    "serve-favicon": "~2.4.5",
+    "xml-js": "~1.6.2"
+  }
 }

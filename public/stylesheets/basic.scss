@@ -16,6 +16,12 @@ body {
   border-bottom: 1px solid #eee;
 }
 
+blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1rem;
+  border-left: 5px solid #eee;
+}
 
 /*
  * Sidebar
@@ -56,7 +62,6 @@ body {
   background-color: #428bca;
 }
 
-
 /*
  * Main content
  */
@@ -73,7 +78,6 @@ body {
 .main .page-header {
   margin-top: 0;
 }
-
 
 /*
  * Placeholder dashboard ideas

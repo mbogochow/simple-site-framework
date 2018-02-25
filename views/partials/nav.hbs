@@ -6,7 +6,20 @@
     <div class="collapse navbar-collapse" id="siteNavbar">
         <ul class="navbar-nav mr-auto">
             {{#each nav}}
-                <li class="nav-item {{{this.active}}}"><a class="nav-link" href="{{this.target}}">{{this.name}}</a></li>
+                {{#if_not_false this.main}}
+                    {{#if this.options}}
+                        <li class="nav-item dropdown {{{this.active}}}">
+                            <a class="nav-link dropdown-toggle" href="#" id="{{this.id}}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{this.name}}</a>
+                            <div class="dropdown-menu" aria-labelledby="{{this.id}}">
+                                {{#each this.options}}
+                                    <a class="dropdown-item {{{get_nav ../../nav this "active"}}}" href="{{get_nav ../../nav this "target"}}">{{get_nav ../../nav this "name"}}</a>
+                                {{/each}}
+                            </div>
+                        </li>
+                    {{else}}
+                        <li class="nav-item {{{this.active}}}"><a class="nav-link" href="{{this.target}}">{{this.name}}</a></li>
+                    {{/if}}
+                {{/if_not_false}}
             {{/each}}
         </ul>
     </div>

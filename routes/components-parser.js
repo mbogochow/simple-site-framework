@@ -1,4 +1,4 @@
-var express = require('express')
+let express = require('express')
   , fs = require('fs')
   , xml2js = require('xml-js').xml2js
   , md2html = require('markdown-it')()
@@ -8,7 +8,7 @@ var express = require('express')
 // Register all template partials in the partials directory
 partials.regPartials(hbs);
 
-var getValue = function (item) {
+let getValue = function (item) {
     if (item instanceof Object) {
         // If it is an empty object then return an empty string
         if (Object.keys(item).length === 0) {
@@ -40,12 +40,28 @@ hbs.registerHelper('unless_empty', function (item, options) {
     return /\S/.test(value) ? options.fn(this) : options.inverse(this);
 });
 
+hbs.registerHelper('get_nav', function (nav, key, field) {
+    if (field) {
+        return nav[key][field];
+    } else {
+        return nav[key];
+    }
+});
+
+/**
+ * if_not_false
+ * Returns true as long as the value !== false
+ */
+hbs.registerHelper('if_not_false', function (value, options) {
+    return value !== false ? options.fn(this) : options.inverse(this);
+});
+
 /**
  * Get the file type by extracting the file extension from the given file name.
  * Returns null if a file extension could not be found.
  */
 function getFileType(filename) {
-    var matches = /\.[0-9a-z]+$/i.exec(filename);
+    let matches = /\.[0-9a-z]+$/i.exec(filename);
     if (!matches) return null;
     return matches[0].replace(".", "");
 }
@@ -61,7 +77,7 @@ function equalsIgnoreCase(str1, str2) {
  * Get a JS object from the data file.
  */
 function getData() {
-    var components_file = "data/components.json";
+    let components_file = "data/components.json";
     return JSON.parse(fs.readFileSync(components_file, 'utf8'));
 }
 
@@ -139,8 +155,10 @@ module.exports = {router: router, targets: []};
 for (const navkey in components.nav) {
     const nav = components.nav[navkey];
 
-    router.get(nav.target, callback(nav.view, navkey));
-    module.exports.targets.push(nav.target);
+    if (nav.target) {
+        router.get(nav.target, callback(nav.view, navkey));
+        module.exports.targets.push(nav.target);
+    }
 
     for (const sidekey in nav.sidebar) {
         if (nav.sidebar.hasOwnProperty(sidekey)) {

@@ -1,6 +1,6 @@
 let express = require('express')
   , fs = require('fs')
-  , xml2js = require('xml-js').xml2js
+  , xml2js = require('xml2js').parseString
   , md2html = require('markdown-it')()
   , hbs = require('hbs')
   , partials = require('../lib/partials');
@@ -54,6 +54,13 @@ hbs.registerHelper('get_nav', function (nav, key, field) {
  */
 hbs.registerHelper('if_not_false', function (value, options) {
     return value !== false ? options.fn(this) : options.inverse(this);
+});
+
+/**
+ * Log the value to console.log
+ */
+hbs.registerHelper('log', function (value) {
+    console.log(value);
 });
 
 /**
@@ -131,7 +138,13 @@ function getContext(navkey, sidekey) {
             // Read and render the data file contents
             const fileContents = fs.readFileSync("data/" + data_file.filename, 'utf8');
             if (equalsIgnoreCase(data_file.filetype, "xml")) {
-                context[data_file.name] = xml2js(fileContents, {trim: true, compact: true, ignoreComment: true});
+                xml2js(fileContents, {trim: true, normalize: true, explicitArray: false}, function(err, result) {
+                    if (err) {
+                        console.err('Failed to load XML data file: ' + err);
+                        return null
+                    }
+                    context[data_file.name] = result;
+                });
             } else if (equalsIgnoreCase(data_file.filetype, "md")) {
                 context[data_file.name] = md2html.render(fileContents);
             }

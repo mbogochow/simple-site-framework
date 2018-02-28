@@ -3,7 +3,8 @@ let express = require('express')
   , xml2js = require('xml2js').parseString
   , md2html = require('markdown-it')()
   , hbsHelper = require('../lib/hbsHelper')
-  , MongoClient = require('mongodb').MongoClient;
+  , MongoClient = require('mongodb').MongoClient
+  , format = require('util').format;
 
 let partials = hbsHelper.partials;
 
@@ -53,10 +54,69 @@ function copyContext() {
     return JSON.parse(JSON.stringify(components));
 }
 
+function parseFile(dataSource) {
+    let sourceContext;
+
+    // Determine the file type based on the file extension if no filetype is provided
+    if (!dataSource.filetype) {
+        dataSource.filetype = getFileType(dataSource.filename);
+    }
+
+    // Read and render the data file contents
+    const fileContents = fs.readFileSync("data/" + dataSource.filename, 'utf8');
+    if (equalsIgnoreCase(dataSource.filetype, "xml")) {
+        xml2js(fileContents, {trim: true, normalize: true, explicitArray: false}, function(err, result) {
+            if (err) {
+                console.err('Failed to load XML data file: ' + err);
+                return null
+            }
+            sourceContext = result;
+        });
+    } else if (equalsIgnoreCase(dataSource.filetype, "md")) {
+        sourceContext = md2html.render(fileContents);
+    }
+
+    return sourceContext;
+}
+
+function parseMongodb(dataSource) {
+    let auth = JSON.parse(fs.readFileSync("data/" + dataSource.authfile, 'utf8'));
+    let url = format("mongodb://%s:%s@%s:%s/%s?authMechanism=%s&authSource=%s", auth.user, auth.password, auth.host, auth.port, auth.db, (auth.mechanism ? auth.mechanism : 'DEFAULT'), auth.db);
+
+    return new Promise((resolve, reject) => {
+        MongoClient.connect(url, function(err, database) {
+            let sourceContext;
+
+            if (err) {
+                reject(err);
+            } else {
+                let db = database.db(auth.db);
+
+                sourceContext = {data: {mods: {mod: []}}};
+                db.collection(dataSource.collection).find().toArray((err, items) =>  {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        const actualItems = items[0];
+                        for (const key in actualItems) {
+                            if (key !== '_id' && actualItems.hasOwnProperty(key)) {
+                                sourceContext.data.mods.mod.push(actualItems[key]);
+                            }
+                        }
+
+                        database.close();
+                        resolve({dataSource: dataSource, context: sourceContext});
+                    }
+                });
+            }
+        });
+    });
+}
+
 /**
  * Get the context for the given page from the data file.
  */
-function getContext(navkey, sidekey) {
+function getContext(navkey, sidekey, callback) {
     const context = copyContext();
     const page = getPage(context, navkey, sidekey);
 
@@ -71,37 +131,43 @@ function getContext(navkey, sidekey) {
     context.prettify = fs.existsSync('public/google-code-prettify');
     context.hljs = fs.existsSync('public/javascripts/highlight.min.js');
 
-    const data_files = page['data-files'];
-    if (data_files) {
-        for (let data_file of data_files) {
-            // Determine the file type based on the file extension if no filetype is provided
-            if (!data_file.filetype) {
-                data_file.filetype = getFileType(data_file.filename);
-            }
-
-            // Read and render the data file contents
-            const fileContents = fs.readFileSync("data/" + data_file.filename, 'utf8');
-            if (equalsIgnoreCase(data_file.filetype, "xml")) {
-                xml2js(fileContents, {trim: true, normalize: true, explicitArray: false}, function(err, result) {
-                    if (err) {
-                        console.err('Failed to load XML data file: ' + err);
-                        return null
-                    }
-                    context[data_file.name] = result;
-                });
-            } else if (equalsIgnoreCase(data_file.filetype, "md")) {
-                context[data_file.name] = md2html.render(fileContents);
+    let dataSources = page['data-sources'];
+    let promises = [];
+    if (dataSources) {
+        for (let dataSource of dataSources) {
+            if (dataSource.type === 'file') {
+                promises.push({dataSource: dataSource, context: parseFile(dataSource)});
+            } else if (dataSource.type === 'mongodb') {
+                promises.push(parseMongodb(dataSource));
+            } else {
+                console.log('Unrecognized data source type: ' + dataSource.type);
             }
         }
     }
 
-    return context;
+    Promise.all(promises)
+        .then(results => {
+            for (let result of results) {
+                context[result.dataSource.name] = result.context;
+            }
+
+            callback(context);
+        })
+        .catch(err => {
+            callback('error', err);
+        });
 }
 
 // Creates the callback for rendering the pages by the router
 const callback = function (view, navkey, sidekey) {
     return function (req, res) {
-        res.render(view, getContext(navkey, sidekey));
+        getContext(navkey, sidekey, function (context, err) {
+            if (err) {
+                res.render('error', {error: err});
+            } else {
+                res.render(view, context);
+            }
+        });
     }
 };
 

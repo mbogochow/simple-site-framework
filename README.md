@@ -81,13 +81,13 @@ This would produce the following navbar:
 
 An example for the sidebar would be similar as they share the same fields.
 
-## Additional Data Files
+## Additional Data Sources
 
-Additional data files can be loaded to be used by a page using the `data-files` array of a nav or sidebar object.  Any number of files can be added to this array.  The `data-files` array contains objects of the following form:
+Additional data sources can be loaded to be used by a page using the `data-sources` array of a nav or sidebar object.  Any number of files can be added to this array.  The `data-sources` array contains objects of the following form:
 
 ```json
-"data-files": [
-    {"name": "", "filename": "", "filetype": ""}
+"data-sources": [
+    {"type": "file", "name": "", "filename": "", "filetype": ""}
 ]
 ```
 
@@ -100,8 +100,8 @@ The fields of the object have the following meaning:
 For XML files, the system uses [xml-js](https://www.npmjs.com/package/xml-js) to create a JS object from the xml file, so at page creation, this `data-files` array:
 
 ```json
-"data-files": [
-    {"name": "my_data", "filename": "my_data.xml", "filetype": "xml"}
+"data-sources": [
+    {"type": "file", "name": "my_data", "filename": "my_data.xml", "filetype": "xml"}
 ]
 ```
 
